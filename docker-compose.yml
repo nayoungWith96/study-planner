@@ -1,0 +1,66 @@
+version: '3.8'
+services:
+  elasticsearch:
+    image: elasticsearch:8.15.0
+    container_name: elasticsearch-container
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=elastic
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:8.9.0
+  #   container_name: kibana
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  #     - ELASTICSEARCH_USERNAME=elastic
+  #     - ELASTICSEARCH_PASSWORD=elasticsearch
+  #   ports:
+  #     - "5601:5601"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /c/nginx-1.26.2/conf/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - node
+
+  node:
+    image: node:latest
+    container_name: node-app
+    environment:
+      - MONGO_URL=mongodb://localohst:27017/mydatabase
+    ports:
+      - "3000:3000"
+    volumes:
+      - /c/study_planner:/usr/src/app
+    command: npm start
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  httpd:
+    image: httpd:latest
+    container_name: httpd-server
+    ports:
+      - "8080:80"
+    volumes:
+      - /c/httpd/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
+
+volumes:
+  es_data: /c/elasticsearch-8.15.0/data
+  mongo_data: /c/Program Files/MongoDB/Server/7.0/data
