@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
   try {
     // MongoDB에 연결합니다. 연결 문자열과 옵션을 전달합니다.
-    await mongoose.connect("mongodb://localhost:27017/mydatabase");
+    await mongoose.connect("mongodb://host.docker.internal:27017/mydatabase");
     console.log("MongoDB connected"); // 성공적으로 연결된 경우 메시지 출력
 
     console.log("Database:", mongoose.connection.name);

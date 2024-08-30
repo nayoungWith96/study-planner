@@ -8,7 +8,7 @@ const ItemSchema = new mongoose.Schema({
 });
 
 // Item 모델을 생성합니다. 이 모델은 ItemSchema를 기반으로 MongoDB와 상호작용합니다.
-const Item = mongoose.model("Item", ItemSchema, "Item");
+const Item = mongoose.model("Item", ItemSchema);
 
 // 다른 파일에서 이 모델을 사용할 수 있도록 내보냅니다.
 module.exports = Item;

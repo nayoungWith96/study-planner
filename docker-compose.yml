@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   elasticsearch:
     image: elasticsearch:8.15.0
@@ -36,7 +36,7 @@ services:
     image: node:latest
     container_name: node-app
     environment:
-      - MONGO_URL=mongodb://localohst:27017/mydatabase
+      - MONGO_URL=mongodb://localhost:27017/mydatabase
     ports:
       - "3000:3000"
     volumes:
@@ -64,3 +64,6 @@ services:
 volumes:
   es_data: /c/elasticsearch-8.15.0/data
   mongo_data: /c/Program Files/MongoDB/Server/7.0/data
+
+volumes:
+  - ./:/usr/src/app/
